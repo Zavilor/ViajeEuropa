@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#102b4e" />
+  <link rel="preconnect" href="https://images.unsplash.com" />
   <title>Viaje Europa · 2026</title>
   <style>
     :root {
@@ -186,6 +187,95 @@
       font-size: 13px;
       font-weight: 800;
       text-align: center;
+    }
+
+    .activity.has-preview {
+      cursor: help;
+    }
+
+    .activity.has-preview:focus-visible {
+      outline: 2px solid #6a1b9a;
+      outline-offset: 1px;
+    }
+
+    .place-preview {
+      position: fixed;
+      z-index: 20;
+      width: min(500px, calc(100vw - 24px));
+      max-height: calc(100vh - 24px);
+      padding: 12px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      border: 1px solid #b8c2cc;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 14px 32px rgba(16, 43, 78, .24);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(6px);
+      visibility: hidden;
+      transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+    }
+
+    .place-preview.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
+
+    .place-preview-image {
+      display: grid;
+      position: relative;
+      height: 235px;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 8px;
+      color: var(--navy);
+      background: var(--sky);
+      font-size: 36px;
+    }
+
+    .place-preview-image.is-loading::after {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: var(--navy);
+      background: rgba(223, 242, 251, .78);
+      content: 'Cargando imagen…';
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .place-preview-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .place-preview h3 {
+      margin: 11px 2px 4px;
+      color: var(--navy);
+      font-size: 16px;
+    }
+
+    .place-preview p {
+      margin: 0 2px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.48;
+    }
+
+    @media (max-width: 600px) {
+      .place-preview {
+        width: calc(100vw - 20px);
+      }
+
+      .place-preview-image {
+        height: 185px;
+      }
     }
 
     .visual {
@@ -439,7 +529,7 @@
           <div class="week-label"><div><span>Semana 5</span>Madrid<br />y regreso</div></div>
           <article class="day" data-city="madrid"><div class="day-head">Domingo 11/10</div><div class="day-body"><div class="place">MADRID</div><div class="visual">🏙️</div><div class="activity"><strong class="clock">09:30/10:00</strong> · Museo del Prado</div><div class="activity">→ Paseo del Prado</div><div class="activity">→ Fuente de Cibeles</div><div class="activity">→ Puerta de Alcalá</div><div class="activity">→ Parque del Retiro</div><div class="activity">→ Estanque Grande</div><div class="activity">→ Palacio de Cristal</div><div class="activity">🌆 Tarde/noche · Barrio de las Letras → Chueca o Malasaña → cena</div></div></article>
           <article class="day" data-city="madrid"><div class="day-head">Lunes 12/10</div><div class="day-body"><div class="place">MADRID → MÉXICO</div><div class="visual">☕</div><div class="activity"><strong class="clock">09:30–12:30</strong> · Desayuno largo → compras / Gran Vía / pendientes → paseo tranquilo</div><div class="activity"><strong class="clock">13:00–15:00</strong> · Comer → hotel / valijas</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div><div class="activity confirmed">✈️ AM0022 · Sale <strong class="clock">23:35</strong></div></div></article>
-          <article class="day" data-city="argentina"><div class="day-head">Martes 13/10</div><div class="day-body"><div class="place">MÉXICO → EZEIZA</div><div class="visual">🇦🇷</div><div class="activity confirmed">🛬 AM0022 · Llega <strong class="clock">03:45</strong></div><div class="activity confirmed">✈️ AM0030 · Sale <strong class="clock">09:10</strong> · Llega <strong class="clock">21:25</strong></div></div></article>
+          <article class="day" data-city="argentina"><div class="day-head">Martes 13/10</div><div class="day-body"><div class="place">MÉXICO → EZEIZA</div><div class="visual">🇦🇷</div><div class="activity confirmed">🛬 AM0022 · Llega <strong class="clock">03:45</strong></div><div class="activity confirmed">✈️ AM0030 · Sale <strong class="clock">09:10</strong> · Llega <strong class="clock">21:25</strong></div><div class="activity"><span class="leave">📅 Pedir licencia · Día sin trabajo</span></div></div></article>
           <div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div>
         </div>
       </section>
@@ -448,5 +538,452 @@
 
     <footer>✈️ Viaje Europa · Plan personal · Septiembre–Octubre 2026</footer>
   </main>
+  <script>
+    const placeData = [
+      {
+        key: 'cagliari',
+        match: 'cagliari',
+        title: 'Cagliari',
+        description: 'Capital de Cerdeña, con casco histórico, puerto y playas cercanas.',
+        image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=640&q=80',
+        icon: '🏝️'
+      },
+      {
+        key: 'madrid',
+        match: 'madrid',
+        title: 'Madrid',
+        description: 'Capital de España, con grandes paseos, museos, plazas y barrios históricos.',
+        image: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=640&q=80',
+        icon: '🏙️'
+      },
+      {
+        key: 'barcelona',
+        match: 'barcelona',
+        title: 'Barcelona',
+        description: 'Ciudad mediterránea de arquitectura modernista, barrios históricos y playa.',
+        image: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=640&q=80',
+        icon: '🏛️'
+      },
+      {
+        key: 'ibiza',
+        match: 'ibiza',
+        title: 'Ibiza',
+        description: 'Isla balear de calas, atardeceres, playas y el casco histórico de Dalt Vila.',
+        image: 'https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=640&q=80',
+        icon: '🏖️'
+      },
+      {
+        key: 'mallorca',
+        match: 'mallorca',
+        title: 'Mallorca',
+        description: 'Isla balear con Palma, calas, pueblos de la Serra de Tramuntana y playas.',
+        image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=640&q=80',
+        icon: '🌊'
+      },
+      {
+        key: 'roma',
+        match: 'roma',
+        title: 'Roma',
+        description: 'Ciudad histórica de Italia, con el Coliseo, el Foro Romano y grandes plazas.',
+        image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=640&q=80',
+        icon: '🏛️'
+      },
+      {
+        key: 'venecia',
+        match: 'venecia',
+        title: 'Venecia',
+        description: 'Ciudad de canales, góndolas, plazas históricas y arquitectura única.',
+        image: 'https://images.unsplash.com/photo-1514890547357-a9ee288728e0?auto=format&fit=crop&w=640&q=80',
+        icon: '🚤'
+      },
+      {
+        key: 'napoles',
+        match: 'napoles',
+        title: 'Nápoles',
+        description: 'Ciudad del sur de Italia, famosa por su centro histórico, su comida y el Vesubio.',
+        image: 'https://images.unsplash.com/photo-1534445867742-43195f401b6c?auto=format&fit=crop&w=640&q=80',
+        icon: '🍕'
+      },
+      {
+        key: 'sorrento',
+        match: 'sorrento',
+        title: 'Sorrento',
+        description: 'Base ideal para recorrer la Costa Amalfitana, Positano y los pueblos costeros.',
+        image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=640&q=80',
+        icon: '🌅'
+      },
+      {
+        key: 'capri',
+        match: 'capri',
+        title: 'Capri',
+        description: 'Isla del golfo de Nápoles, con Anacapri, Monte Solaro, Faraglioni y calas.',
+        image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=640&q=80',
+        icon: '⛵'
+      },
+      {
+        key: 'cerdena',
+        match: 'cerdena',
+        title: 'Cerdeña',
+        description: 'Isla mediterránea de playas, calas, pueblos costeros y aguas transparentes.',
+        image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=640&q=80',
+        icon: '🏝️'
+      }
+    ];
+
+    const curatedImageSources = [
+      ['barcelona', 'https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=640&q=80'],
+      ['ibiza', 'https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=640&q=80'],
+      ['mallorca', 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=640&q=80'],
+      ['rome', 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=640&q=80'],
+      ['venice', 'https://images.unsplash.com/photo-1514890547357-a9ee288728e0?auto=format&fit=crop&w=640&q=80'],
+      ['naples', 'https://images.unsplash.com/photo-1534445867742-43195f401b6c?auto=format&fit=crop&w=640&q=80'],
+      ['sorrento', 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=640&q=80'],
+      ['capri', 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=640&q=80'],
+      ['madrid', 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=640&q=80'],
+      ['cagliari', 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=640&q=80'],
+      ['sardinia', 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=640&q=80']
+    ];
+
+    function curatedImage(query) {
+      const source = curatedImageSources.find(([match]) => query.includes(match));
+      return source ? source[1] : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=640&q=80';
+    }
+
+    const attractionData = [
+      ['sagrada familia', 'Sagrada Familia', 'Basílica modernista de Antoni Gaudí y uno de los símbolos de Barcelona.', 'sagrada-familia,barcelona', '⛪'],
+      ['sant pau', 'Recinto Modernista de Sant Pau', 'Antiguo hospital modernista, famoso por sus edificios y jardines.', 'sant-pau,barcelona', '🏛️'],
+      ['passeig de gracia', 'Passeig de Gràcia', 'Avenida elegante de Barcelona, con arquitectura modernista y comercios.', 'passeig-de-gracia,barcelona', '🏙️'],
+      ['casa batllo', 'Casa Batlló', 'Obra de Gaudí en el Passeig de Gràcia, conocida por su fachada colorida.', 'casa-batllo,barcelona', '🏠'],
+      ['park guell', 'Park Güell', 'Parque de Gaudí con mosaicos, formas orgánicas y vistas de Barcelona.', 'park-guell,barcelona', '🌿'],
+      ['gracia', 'Gràcia', 'Barrio con plazas, calles peatonales y ambiente local.', 'gracia,barcelona', '🏘️'],
+      ['boqueria', 'La Boqueria', 'Mercado histórico de La Rambla con puestos de comida y productos frescos.', 'boqueria,barcelona', '🍊'],
+      ['ramblas', 'Las Ramblas', 'Paseo central y arbolado que conecta Plaça Catalunya con el puerto.', 'las-ramblas,barcelona', '🌴'],
+      ['placa catalunya', 'Plaça Catalunya', 'Gran plaza central de Barcelona y punto de conexión entre barrios.', 'placa-catalunya,barcelona', '📍'],
+      ['barrio gotico', 'Barrio Gótico', 'Centro histórico de Barcelona, con callejuelas, plazas y restos romanos.', 'gothic-quarter,barcelona', '🏘️'],
+      ['catedral generica', 'Catedral', 'Templo principal del casco histórico que se esté visitando.', 'cathedral,spain,italy', '⛪'],
+      ['placa reial', 'Plaça Reial', 'Plaza porticada del barrio Gótico, conocida por sus palmeras y terrazas.', 'placa-reial,barcelona', '🌴'],
+      ['el born', 'El Born', 'Barrio histórico de Barcelona, con calles estrechas, bares y cultura.', 'el-born,barcelona', '🏘️'],
+      ['dalt vila', 'Dalt Vila', 'Casco antiguo amurallado de Ibiza, declarado Patrimonio de la Humanidad.', 'dalt-vila,ibiza', '🏰'],
+      ['cala comte', 'Cala Comte', 'Cala de Ibiza conocida por sus aguas claras y sus atardeceres.', 'cala-comte,ibiza', '🌅'],
+      ['cala d hort', "Cala d'Hort", 'Playa del oeste de Ibiza con vistas privilegiadas al islote de Es Vedrà.', 'cala-d-hort,ibiza', '🏖️'],
+      ['es vedra', 'Es Vedrà', 'Islote rocoso frente a Ibiza, uno de los paisajes más reconocibles de la isla.', 'es-vedra,ibiza', '🪨'],
+      ['cala bassa', 'Cala Bassa', 'Playa de arena clara y agua tranquila en la costa oeste de Ibiza.', 'cala-bassa,ibiza', '🏖️'],
+      ['catedral la seu', 'Catedral La Seu', 'Catedral gótica de Palma, junto al mar y frente al Parc de la Mar.', 'palma-cathedral,mallorca', '⛪'],
+      ['almudaina', 'Palacio de la Almudaina', 'Palacio real de origen islámico junto a la Catedral de Palma.', 'almudaina,palma,mallorca', '🏰'],
+      ['la lonja', 'La Lonja', 'Edificio gótico de Palma que fue un centro histórico de comercio marítimo.', 'la-lonja,palma,mallorca', '🏛️'],
+      ['valldemossa', 'Valldemossa', 'Pueblo de montaña de la Tramuntana, conocido por sus calles de piedra.', 'valldemossa,mallorca', '🏘️'],
+      ['deia', 'Deià', 'Pueblo de la Serra de Tramuntana con paisaje montañoso y ambiente artístico.', 'deia,mallorca', '⛰️'],
+      ['soller', 'Sóller', 'Localidad de la Tramuntana rodeada de montañas, naranjos y arquitectura tradicional.', 'soller,mallorca', '🚋'],
+      ['port de soller', 'Port de Sóller', 'Puerto natural de Mallorca con paseo marítimo, playa y restaurantes.', 'port-de-soller,mallorca', '🌊'],
+      ['es trenc', 'Es Trenc', 'Playa protegida de Mallorca, famosa por su arena blanca y agua transparente.', 'es-trenc,mallorca', '🏖️'],
+      ['coliseo', 'Coliseo', 'Anfiteatro romano y uno de los monumentos más emblemáticos de Roma.', 'colosseum,rome', '🏛️'],
+      ['foro romano', 'Foro Romano', 'Centro político, religioso y comercial de la antigua Roma.', 'roman-forum,rome', '🏛️'],
+      ['palatino', 'Palatino', 'Colina arqueológica considerada uno de los lugares de origen de Roma.', 'palatine-hill,rome', '🏺'],
+      ['piazza venezia', 'Piazza Venezia', 'Plaza central de Roma junto al monumento a Vittorio Emanuele II.', 'piazza-venezia,rome', '📍'],
+      ['campidoglio', 'Campidoglio', 'Plaza diseñada por Miguel Ángel en la colina Capitolina.', 'campidoglio,rome', '🏛️'],
+      ['vaticano', 'Ciudad del Vaticano', 'Estado independiente dentro de Roma y centro de la Iglesia católica.', 'vatican,rome', '⛪'],
+      ['museos vaticanos', 'Museos Vaticanos', 'Complejo de museos con colecciones de arte y acceso a la Capilla Sixtina.', 'vatican-museums,rome', '🖼️'],
+      ['capilla sixtina', 'Capilla Sixtina', 'Capilla conocida por los frescos de Miguel Ángel y su importancia religiosa.', 'sistine-chapel,rome', '🎨'],
+      ['basilica de san pedro', 'Basílica de San Pedro', 'Basílica monumental del Vaticano y uno de los principales templos cristianos.', 'st-peters-basilica,rome', '⛪'],
+      ['piazza san pietro', 'Piazza San Pietro', 'Plaza de Bernini frente a la Basílica de San Pedro.', 'st-peters-square,rome', '📍'],
+      ['castel sant angelo', "Castel Sant'Angelo", 'Fortaleza y antiguo mausoleo junto al río Tíber.', 'castel-sant-angelo,rome', '🏰'],
+      ['ponte sant angelo', "Ponte Sant'Angelo", 'Puente histórico adornado con esculturas de ángeles sobre el Tíber.', 'ponte-sant-angelo,rome', '🌉'],
+      ['fontana di trevi', 'Fontana di Trevi', 'Fuente barroca de Roma, famosa por la tradición de lanzar una moneda.', 'trevi-fountain,rome', '⛲'],
+      ['piazza di spagna', 'Piazza di Spagna', 'Plaza romana al pie de la escalinata de la Trinità dei Monti.', 'spanish-steps,rome', '🪜'],
+      ['spanish steps', 'Spanish Steps', 'Escalinata monumental que conecta Piazza di Spagna con el Pincio.', 'spanish-steps,rome', '🪜'],
+      ['panteon', 'Panteón', 'Templo romano extraordinariamente conservado, con una gran cúpula.', 'pantheon,rome', '🏛️'],
+      ['piazza navona', 'Piazza Navona', 'Plaza barroca construida sobre el antiguo estadio de Domiciano.', 'piazza-navona,rome', '⛲'],
+      ["campo de' fiori", "Campo de' Fiori", 'Plaza de Roma con mercado durante el día y restaurantes por la noche.', 'campo-de-fiori,rome', '🌺'],
+      ['trastevere', 'Trastevere', 'Barrio de calles estrechas, fachadas tradicionales y vida nocturna.', 'trastevere,rome', '🍝'],
+      ['piazza san marco', 'Piazza San Marco', 'Plaza principal de Venecia, rodeada de edificios históricos.', 'st-marks-square,venice', '📍'],
+      ['basilica de san marco', 'Basílica de San Marco', 'Basílica veneciana reconocible por sus mosaicos y arquitectura bizantina.', 'st-marks-basilica,venice', '⛪'],
+      ['palacio ducal', 'Palacio Ducal', 'Antigua residencia de los dux y sede del poder político de Venecia.', 'doges-palace,venice', '🏰'],
+      ['puente de los suspiros', 'Puente de los Suspiros', 'Puente cubierto que conecta el Palacio Ducal con las antiguas prisiones.', 'bridge-of-sighs,venice', '🌉'],
+      ['puente de rialto', 'Puente de Rialto', 'Uno de los puentes más antiguos y famosos sobre el Gran Canal.', 'rialto-bridge,venice', '🌉'],
+      ['rialto market', 'Rialto Market', 'Mercado tradicional de Venecia junto al puente de Rialto.', 'rialto-market,venice', '🧺'],
+      ['gran canal', 'Gran Canal', 'Principal vía de agua de Venecia, bordeada de palacios históricos.', 'grand-canal,venice', '🚤'],
+      ['cannaregio', 'Cannaregio', 'Sestiere veneciano con canales, calles locales y opciones para cenar.', 'cannaregio,venice', '🏘️'],
+      ['dorsoduro', 'Dorsoduro', 'Barrio de Venecia con museos, galerías, canales y el paseo de Zattere.', 'dorsoduro,venice', '🎨'],
+      ['santa maria della salute', 'Basílica Santa Maria della Salute', 'Basílica barroca ubicada frente al Gran Canal y la Punta della Dogana.', 'santa-maria-della-salute,venice', '⛪'],
+      ['zattere', 'Zattere', 'Paseo frente al agua en Dorsoduro, ideal para caminar y tomar un café.', 'zattere,venice', '🌊'],
+      ['via toledo', 'Via Toledo', 'Avenida comercial y peatonal que atraviesa el centro de Nápoles.', 'via-toledo,naples', '🛍️'],
+      ['quartieri spagnoli', 'Quartieri Spagnoli', 'Barrio de calles estrechas, escaleras y ambiente napolitano.', 'spanish-quarter,naples', '🏘️'],
+      ['galleria umberto', 'Galleria Umberto I', 'Galería comercial monumental del centro de Nápoles.', 'galleria-umberto,naples', '🏛️'],
+      ['piazza del plebiscito', 'Piazza del Plebiscito', 'Gran plaza de Nápoles frente al Palacio Real y la Basílica de San Francesco.', 'piazza-del-plebiscito,naples', '📍'],
+      ['spaccanapoli', 'Spaccanapoli', 'Eje histórico que atraviesa el centro antiguo de Nápoles.', 'spaccanapoli,naples', '🏘️'],
+      ['cappella sansevero', 'Cappella Sansevero', 'Capilla barroca famosa por el Cristo Velato y sus esculturas.', 'cappella-sansevero,naples', '🗿'],
+      ['cristo velato', 'Cristo Velato', 'Escultura de Giuseppe Sanmartino, célebre por el velo tallado en mármol.', 'veiled-christ,naples', '🗿'],
+      ['san gregorio armeno', 'Via San Gregorio Armeno', 'Calle famosa por sus talleres y figuras de pesebres napolitanos.', 'san-gregorio-armeno,naples', '🎭'],
+      ['santa chiara', 'Santa Chiara', 'Complejo religioso con iglesia y claustro de mayólicas.', 'santa-chiara,naples', '⛪'],
+      ['duomo di napoli', 'Duomo di Napoli', 'Catedral de Nápoles, dedicada a Santa Maria Assunta.', 'naples-cathedral,naples', '⛪'],
+      ['positano', 'Positano', 'Pueblo vertical de la Costa Amalfitana, con casas sobre los acantilados.', 'positano,amalfi-coast', '🌊'],
+      ['praiano', 'Praiano', 'Localidad costera más tranquila entre Positano y Amalfi.', 'praiano,amalfi-coast', '🌅'],
+      ['fiordo di furore', 'Fiordo di Furore', 'Pequeña cala encajada entre acantilados de la Costa Amalfitana.', 'fiordo-di-furore,amalfi', '🌊'],
+      ['amalfi', 'Amalfi', 'Pueblo costero histórico y uno de los centros principales de la costa.', 'amalfi,italy', '⛪'],
+      ['ravello', 'Ravello', 'Pueblo de montaña con vistas panorámicas sobre la Costa Amalfitana.', 'ravello,amalfi', '⛰️'],
+      ['porto giunco', 'Porto Giunco', 'Playa de arena clara y agua poco profunda cerca de Villasimius.', 'porto-giunco,sardinia', '🏖️'],
+      ['capo carbonara', 'Capo Carbonara', 'Área marina protegida con calas, rocas y aguas transparentes.', 'capo-carbonara,sardinia', '🌊'],
+      ['punta molentis', 'Punta Molentis', 'Playa de Villasimius conocida por su arena blanca y sus dos bahías.', 'punta-molentis,sardinia', '🏖️'],
+      ['barrio castello', 'Barrio Castello', 'Distrito histórico de Cagliari, elevado sobre el puerto.', 'castello,cagliari', '🏰'],
+      ['bastione di saint remy', 'Bastione di Saint Remy', 'Terraza panorámica de Cagliari con vistas sobre la ciudad y el puerto.', 'bastione-saint-remy,cagliari', '🌇'],
+      ['poetto beach', 'Poetto Beach', 'Playa urbana de Cagliari, extensa y cercana al centro.', 'poetto-beach,cagliari', '🏖️'],
+      ['tuerredda', 'Tuerredda', 'Playa del sur de Cerdeña con agua turquesa y una pequeña isla enfrente.', 'tuerredda,sardinia', '🏖️'],
+      ['su giudeu', 'Su Giudeu', 'Playa amplia de arena clara en la zona de Chia.', 'su-giudeu,sardinia', '🏖️'],
+      ['chia', 'Chia', 'Zona costera del sur de Cerdeña con playas, dunas y torres.', 'chia,sardinia', '🌊'],
+      ['nora', 'Nora', 'Yacimiento arqueológico junto al mar, con restos púnicos y romanos.', 'nora,sardinia', '🏺'],
+      ['pula', 'Pula', 'Pueblo cercano a Nora, con plazas, restaurantes y ambiente local.', 'pula,sardinia', '🏘️'],
+      ['santa margherita', 'Santa Margherita di Pula', 'Franja costera de playas al sur de Cerdeña.', 'santa-margherita-pula,sardinia', '🏖️'],
+      ['cala sinzias', 'Cala Sinzias', 'Playa de arena blanca y agua transparente en la costa sudeste.', 'cala-sinzias,sardinia', '🏖️'],
+      ['costa rei', 'Costa Rei', 'Larga zona costera de playas y calas al sudeste de Cerdeña.', 'costa-rei,sardinia', '🌊'],
+      ['plaza de oriente', 'Plaza de Oriente', 'Plaza monumental de Madrid frente al Palacio Real.', 'plaza-de-oriente,madrid', '📍'],
+      ['palacio real', 'Palacio Real de Madrid', 'Residencia real histórica y uno de los edificios más importantes de Madrid.', 'royal-palace,madrid', '🏰'],
+      ['catedral de la almudena', 'Catedral de la Almudena', 'Catedral de Madrid junto al Palacio Real.', 'almudena-cathedral,madrid', '⛪'],
+      ['plaza mayor', 'Plaza Mayor', 'Plaza porticada del centro histórico de Madrid.', 'plaza-mayor,madrid', '📍'],
+      ['mercado de san miguel', 'Mercado de San Miguel', 'Mercado gastronómico cubierto cerca de Plaza Mayor.', 'san-miguel-market,madrid', '🍢'],
+      ['puerta del sol', 'Puerta del Sol', 'Plaza central de Madrid y punto kilométrico de España.', 'puerta-del-sol,madrid', '📍'],
+      ['gran via', 'Gran Vía', 'Avenida emblemática de Madrid con teatros, tiendas y edificios históricos.', 'gran-via,madrid', '🏙️'],
+      ['plaza de espana', 'Plaza de España', 'Plaza madrileña con el monumento a Cervantes y acceso al Parque del Oeste.', 'plaza-de-espana,madrid', '📍'],
+      ['templo de debod', 'Templo de Debod', 'Templo egipcio trasladado a Madrid, famoso por su atardecer.', 'temple-of-debod,madrid', '🏺'],
+      ['malasana', 'Malasaña', 'Barrio céntrico de Madrid con cafés, bares y ambiente alternativo.', 'malasana,madrid', '🎸'],
+      ['museo del prado', 'Museo del Prado', 'Museo de arte con una de las colecciones de pintura europea más importantes.', 'prado-museum,madrid', '🖼️'],
+      ['paseo del prado', 'Paseo del Prado', 'Paseo monumental que conecta museos, plazas y jardines de Madrid.', 'paseo-del-prado,madrid', '🌳'],
+      ['cibeles', 'Fuente de Cibeles', 'Fuente y plaza emblemáticas de Madrid, junto al Palacio de Cibeles.', 'cibeles,madrid', '⛲'],
+      ['puerta de alcala', 'Puerta de Alcalá', 'Antigua puerta monumental junto a la entrada del Retiro.', 'puerta-de-alcala,madrid', '🏛️'],
+      ['parque del retiro', 'Parque del Retiro', 'Parque histórico de Madrid con jardines, estanque y palacio de cristal.', 'retiro,park,madrid', '🌳'],
+      ['estanque grande', 'Estanque Grande del Retiro', 'Gran estanque central del Retiro, frente al monumento a Alfonso XII.', 'retiro-pond,madrid', '🚣'],
+      ['palacio de cristal', 'Palacio de Cristal', 'Estructura de hierro y vidrio dentro del Parque del Retiro.', 'crystal-palace,retiro,madrid', '🏛️'],
+      ['barrio de las letras', 'Barrio de las Letras', 'Barrio literario del centro de Madrid, con calles históricas y bares.', 'barrio-de-las-letras,madrid', '📚'],
+      ['chueca', 'Chueca', 'Barrio céntrico conocido por sus plazas, restaurantes y vida nocturna.', 'chueca,madrid', '🏘️']
+    ].map(([match, title, description, query, icon]) => ({
+      match,
+      title,
+      description,
+      image: curatedImage(query),
+      icon
+    }));
+
+    const detailedDescriptions = {
+      cagliari: 'Qué ver: el barrio de Castello, el Bastione di Saint Remy, la Catedral, la Marina y el paseo de Poetto. Vale la pena porque combina una ciudad histórica caminable con playas muy cerca y atardeceres sobre el Mediterráneo.',
+      madrid: 'Qué ver: el Palacio Real, Plaza Mayor, Gran Vía, el Prado, Retiro y sus barrios para cenar. Es una ciudad fácil de recorrer por zonas, con mucha vida en la calle y una mezcla muy buena de historia, arte y gastronomía.',
+      barcelona: 'Qué ver: la arquitectura de Gaudí, el Barrio Gótico, El Born, Montjuïc, el puerto y la Barceloneta. Hay que ir porque en pocos días permite combinar monumentos únicos, caminatas urbanas, playa y una escena gastronómica enorme.',
+      ibiza: 'Qué ver: Dalt Vila, las calas del oeste, Es Vedrà y los atardeceres. Ibiza no es solo fiesta: tiene pueblos blancos, agua transparente, muy buenos lugares para comer y paisajes costeros espectaculares.',
+      mallorca: 'Qué ver: Palma, la Catedral, la Serra de Tramuntana, Valldemossa, Deià, Sóller y playas como Es Trenc. Es ideal porque permite pasar de una ciudad histórica a pueblos de montaña y playas increíbles en el mismo día.',
+      roma: 'Qué ver: el Coliseo, el Foro, el Vaticano, sus fuentes, plazas y barrios como Trastevere. Roma merece varios días porque cada recorrido mezcla ruinas de miles de años, arte monumental, iglesias y una vida de barrio muy italiana.',
+      venecia: 'Qué ver: San Marco, el Palacio Ducal, Rialto, el Gran Canal y barrios como Dorsoduro y Cannaregio. Hay que caminarla sin apuro: lo especial no es solo cada monumento, sino descubrir canales, puentes y rincones imposibles de repetir.',
+      napoles: 'Qué ver: Spaccanapoli, el centro histórico, Via Toledo, los Quartieri Spagnoli y Piazza del Plebiscito. Nápoles vale por su energía, su historia, sus iglesias y, por supuesto, por comer una pizza en su lugar de origen.',
+      sorrento: 'Qué ver: el centro, los miradores, el puerto y usarla como base para Positano, Praiano y Amalfi. Es una excelente base porque tiene servicios, vistas al golfo y conexión práctica con la Costa Amalfitana y Capri.',
+      capri: 'Qué ver: Marina Grande, Anacapri, Monte Solaro, la Piazzetta, los Jardines de Augusto y los Faraglioni. Hay que ir por el contraste entre acantilados, mar turquesa, miradores y pueblos elegantes en una isla que se recorre muy bien en un día.',
+      cerdena: 'Qué ver: Cagliari, Villasimius, Porto Giunco, Tuerredda, Chia, Nora y Costa Rei. Cerdeña se disfruta por sus playas de arena clara y agua transparente, pero también por sus ruinas, pueblos y rutas costeras.',
+      'sagrada familia': 'Qué ver: la fachada, el interior y las columnas que imitan un bosque. Es la obra más ambiciosa de Gaudí: la luz cambia dentro del templo y la visita explica cómo arquitectura, naturaleza y religión se mezclan en un edificio único.',
+      'sant pau': 'Qué ver: pabellones, mosaicos, cúpulas, jardines y detalles modernistas. Fue un hospital y hoy funciona como un conjunto monumental menos saturado que la Sagrada Familia, perfecto para entender el modernismo catalán.',
+      'passeig de gracia': 'Qué ver: las fachadas modernistas, Casa Batlló, La Pedrera y las tiendas del paseo. Es una caminata urbana muy completa porque concentra las obras más famosas de Gaudí y otros arquitectos en pocas cuadras.',
+      'casa batllo': 'Qué ver: la fachada ondulada, los balcones, el patio de luces y el techo con forma de dragón. Vale la pena por el uso de color, cerámica y formas curvas; parece una casa salida de un cuento.',
+      'park guell': 'Qué ver: la escalinata, el dragón de mosaico, la plaza con vistas y los caminos entre columnas. Es una visita para caminar y mirar detalles: Gaudí convirtió un parque en una obra de arte integrada al paisaje.',
+      gracia: 'Qué ver: sus plazas, bares, calles peatonales y el ambiente de barrio. Conviene recorrerlo después del Park Güell porque permite bajar el ritmo y conocer una Barcelona más cotidiana, lejos de los circuitos monumentales.',
+      boqueria: 'Qué ver: los puestos de fruta, pescado, embutidos, tapas y jugos en el mercado cubierto. Es ideal para una parada corta y sabrosa, aunque conviene caminar primero por los pasillos y elegir con calma dónde comer.',
+      ramblas: 'Qué ver: el paseo arbolado, los edificios históricos, los puestos y las calles que salen hacia el Gótico. Es una vía de conexión más que una visita aislada: sirve para atravesar el centro hasta el puerto observando el movimiento de la ciudad.',
+      'placa catalunya': 'Qué ver: la gran plaza, sus fuentes y la conexión entre el Eixample, el Gótico y La Rambla. Es un buen punto de orientación para empezar o terminar una caminata por el centro.',
+      'barrio gotico': 'Qué ver: callejuelas, plazas escondidas, restos de la muralla romana y la Catedral. Hay que caminarlo sin seguir demasiado el mapa: lo mejor aparece al doblar una esquina, entre piedra antigua, bares y pequeños comercios.',
+      'placa reial': 'Qué ver: los soportales, las palmeras, las farolas diseñadas por Gaudí y las terrazas. Es una pausa agradable dentro del Gótico, especialmente para tomar algo y ver el movimiento de la plaza.',
+      'el born': 'Qué ver: sus calles medievales, bares, galerías, Santa Maria del Mar y el ambiente nocturno. Es uno de los barrios más lindos para caminar y cenar porque mezcla historia, diseño y mucha vida local.',
+      'dalt vila': 'Qué ver: las murallas, la entrada de Ses Taules, la Catedral y las vistas desde arriba. Hay que subir con calzado cómodo: el premio son las panorámicas del puerto y una Ibiza histórica muy distinta a la de las discotecas.',
+      'cala comte': 'Qué ver: las pequeñas playas, los islotes del frente y el atardecer sobre el mar. Es uno de los mejores lugares de Ibiza para nadar y terminar el día con luz dorada; conviene llegar antes del sunset.',
+      'cala d hort': 'Qué ver: la bahía, los acantilados y la vista frontal de Es Vedrà. Es una parada más paisajística que urbana, ideal para fotos y para entender por qué la costa oeste de Ibiza es tan buscada.',
+      'es vedra': 'Qué ver: el islote desde los miradores de Cala d’Hort y el perfil rocoso sobre el agua. No se visita el islote: se va por la vista, el silencio y uno de los paisajes más icónicos y fotogénicos de Ibiza.',
+      'cala bassa': 'Qué ver: arena clara, pinos, agua calma y zonas para pasar varias horas. Es una playa cómoda para combinar baño, almuerzo y relax sin necesidad de hacer una excursión complicada.',
+      'catedral la seu': 'Qué ver: la nave gótica, el rosetón, el altar y la ubicación frente al mar. Es el gran símbolo de Palma: el contraste entre la piedra dorada, el cielo y el Mediterráneo hace que la visita valga incluso si no se entra mucho tiempo.',
+      almudaina: 'Qué ver: patios, salones, murallas y la mezcla de restos árabes con reformas cristianas. Está al lado de La Seu, así que se visita fácilmente en el mismo recorrido y permite entender la historia de Palma como ciudad estratégica.',
+      'la lonja': 'Qué ver: sus columnas helicoidales, bóvedas y el exterior junto al antiguo frente marítimo. Es una visita breve pero muy impactante, especialmente para apreciar la arquitectura gótica civil de Mallorca.',
+      valldemossa: 'Qué ver: las calles de piedra, las casas con flores, la Cartuja y los miradores de la montaña. Es uno de los pueblos más encantadores de Mallorca para caminar, comer algo y sentir el paisaje de la Tramuntana.',
+      deia: 'Qué ver: las casas de piedra, la iglesia, las montañas y el camino hacia la cala. Deià es pequeño, pero el entorno es precioso y tiene una historia ligada a artistas; vale por el paisaje y el ambiente tranquilo.',
+      soller: 'Qué ver: la plaza, la iglesia, las casas modernistas y el tranvía que conecta con el puerto. Es un pueblo para recorrer despacio, tomar algo y ver cómo la Tramuntana se abre hacia el mar.',
+      'port de soller': 'Qué ver: el paseo junto a la bahía, la playa, los barcos y los restaurantes frente al agua. Es el cierre perfecto de la ruta de montaña porque permite comer y descansar mirando el mar.',
+      'es trenc': 'Qué ver: kilómetros de arena clara, dunas y agua poco profunda. Es una de las playas más naturales de Mallorca; conviene ir para pasar varias horas, caminar por la costa y bañarse sin un paisaje urbano alrededor.',
+      coliseo: 'Qué ver: el exterior, los niveles de gradas, los accesos y la arena donde se realizaban los espectáculos. Es imprescindible porque permite dimensionar la ingeniería y la escala social del Imperio romano; sacar entrada con anticipación evita perder tiempo.',
+      'foro romano': 'Qué ver: templos, basílicas, arcos y la Via Sacra entre las ruinas. Es el lugar para imaginar cómo funcionaba la vida pública de Roma; se disfruta más siguiendo el recorrido con tiempo y mirando las distintas capas de la ciudad.',
+      palatino: 'Qué ver: las ruinas de los palacios imperiales, los jardines y las vistas sobre el Foro. Hay que incluirlo junto al Coliseo porque conecta el poder de los emperadores con el paisaje y el origen legendario de Roma.',
+      'piazza venezia': 'Qué ver: el Monumento a Vittorio Emanuele II, el tráfico romano y la conexión con el Foro. No hace falta quedarse mucho: funciona como punto de paso espectacular entre el centro antiguo y el Campidoglio.',
+      campidoglio: 'Qué ver: la plaza de Miguel Ángel, la escalinata y la vista hacia el Foro Romano. Es una de las plazas más elegantes de Roma y un buen lugar para ver cómo el Renacimiento ordenó un espacio antiguo.',
+      vaticano: 'Qué ver: la Plaza de San Pedro, la Basílica y los Museos Vaticanos. Aunque es un Estado diminuto, concentra una cantidad enorme de historia, arte y arquitectura; conviene reservar entradas y llevar hombros y rodillas cubiertos.',
+      'museos vaticanos': 'Qué ver: esculturas clásicas, galerías de mapas, tapices y las salas que conducen a la Capilla Sixtina. Es una visita intensa y larga: hay que elegir un ritmo, mirar techos y no intentar absorber cada obra.',
+      'capilla sixtina': 'Qué ver: el techo de Miguel Ángel, el Juicio Final y la arquitectura de la capilla. No se puede hablar ni sacar fotos, así que conviene detenerse unos minutos para mirar la escena completa y los detalles.',
+      'basilica de san pedro': 'Qué ver: la nave, la cúpula, el baldaquino de Bernini y La Piedad. La escala impresiona incluso sin ser religioso; es una de las grandes experiencias arquitectónicas de Roma.',
+      'piazza san pietro': 'Qué ver: la columnata de Bernini, el obelisco y la perspectiva hacia la Basílica. Llegar temprano permite verla con menos gente y entender mejor cómo la plaza abraza a quienes entran.',
+      'castel sant angelo': 'Qué ver: la fortaleza circular, el puente y las vistas del Tíber y del Vaticano. Aunque solo se visite por fuera, es una parada fotográfica excelente y completa el recorrido de San Pedro.',
+      'ponte sant angelo': 'Qué ver: las esculturas de ángeles y la perspectiva del castillo sobre el río. Es un puente corto pero muy escénico, especialmente con la luz de la tarde.',
+      'fontana di trevi': 'Qué ver: la composición de Neptuno, los caballos y las rocas de la fuente. Hay que ir por la escala y el ambiente; suele estar llena, así que una visita temprano o de noche se disfruta mejor.',
+      'piazza di spagna': 'Qué ver: la fuente, la escalinata y las calles comerciales que suben hacia el Pincio. Es una parada clásica y muy fotogénica, ideal para conectar con Trevi caminando.',
+      'spanish steps': 'Qué ver: la escalinata de la Trinità dei Monti y la perspectiva sobre Piazza di Spagna. No se puede sentarse en los escalones, pero sí detenerse en los alrededores y subir para ver el barrio desde arriba.',
+      panteon: 'Qué ver: el pórtico, la cúpula y el óculo abierto en el techo. Es uno de los edificios antiguos mejor conservados y la entrada de luz permite entender por qué su interior sigue siendo tan impactante.',
+      'piazza navona': 'Qué ver: las fuentes de Bernini, la iglesia de Sant’Agnese y la forma alargada de la antigua pista romana. Es una plaza para recorrer el perímetro, tomar un café y observar artistas y movimiento.',
+      "campo de' fiori": 'Qué ver: el mercado de la mañana, las fachadas y las calles que conectan con el centro. Es mejor visitarlo temprano; por la noche cambia de ambiente y se llena de restaurantes y bares.',
+      trastevere: 'Qué ver: callejuelas, fachadas con plantas, plazas, trattorias y la Basílica de Santa Maria. Es el barrio ideal para terminar el día caminando y cenando sin buscar una atracción puntual.',
+      'piazza san marco': 'Qué ver: la plaza, los soportales, el campanile y la laguna. Es el corazón monumental de Venecia, especialmente lindo temprano, cuando la luz refleja en la piedra y hay menos grupos.',
+      'basilica de san marco': 'Qué ver: los mosaicos dorados, las cúpulas y la mezcla de estilos orientales y occidentales. La visita explica por qué Venecia fue una potencia comercial conectada con todo el Mediterráneo.',
+      'palacio ducal': 'Qué ver: patios, salas de gobierno, obras de arte, el Puente de los Suspiros y las prisiones. Es la visita clave para entender cómo gobernaba la República de Venecia.',
+      'puente de los suspiros': 'Qué ver: el puente cubierto desde el exterior y el recorrido interno si se entra al Palacio Ducal. Su nombre viene del supuesto suspiro de los prisioneros al ver por última vez el exterior.',
+      'puente de rialto': 'Qué ver: los arcos, las tiendas y las vistas del Gran Canal. Es un punto de paso obligado, pero conviene cruzarlo y también mirarlo desde los muelles para apreciar su escala.',
+      'rialto market': 'Qué ver: puestos de pescado, frutas, verduras y productos locales. Es una forma de ver la Venecia cotidiana y entender que el Gran Canal también es una vía de abastecimiento, no solo una postal.',
+      'gran canal': 'Qué ver: los palacios, puentes y tráfico de vaporetti desde el agua. Recorrerlo en vaporetto es una de las mejores experiencias de Venecia porque convierte el traslado en una visita panorámica.',
+      cannaregio: 'Qué ver: canales tranquilos, calles residenciales, el antiguo gueto y bares locales. Es una zona ideal para cenar porque se siente menos monumental y más vivida que San Marco.',
+      dorsoduro: 'Qué ver: galerías, universidades, canales y el paseo de Zattere. Es uno de los barrios más agradables para caminar sin rumbo, combinando arte, arquitectura y vistas al agua.',
+      'santa maria della salute': 'Qué ver: la cúpula, el altar y la ubicación en la punta del Gran Canal. La basílica funciona como un gran cierre visual del recorrido por Dorsoduro y ofrece vistas hermosas hacia San Marco.',
+      zattere: 'Qué ver: el paseo largo junto a la laguna, los edificios de Dorsoduro y los cafés. Es perfecto para caminar después de comer, con espacio y una vista abierta que contrasta con los callejones.',
+      'via toledo': 'Qué ver: tiendas, estaciones de metro, palacios y el movimiento del centro. Es la avenida para entrar en ritmo napolitano y conectar el centro histórico con Quartieri Spagnoli.',
+      'quartieri spagnoli': 'Qué ver: callejones, ropa tendida, escaleras, murales y pequeños locales. Hay que recorrerlo con respeto y de día: es una zona auténtica que muestra la vida cotidiana y la energía de Nápoles.',
+      'galleria umberto': 'Qué ver: la cúpula de vidrio, los mosaicos del suelo y las fachadas monumentales. Es una parada corta, pero visualmente espectacular y queda muy cerca del teatro San Carlo y el Plebiscito.',
+      'piazza del plebiscito': 'Qué ver: la explanada, el Palacio Real, la Basílica y las columnas. Es el gran espacio monumental de Nápoles y sirve para dimensionar la relación de la ciudad con la monarquía y el mar.',
+      spaccanapoli: 'Qué ver: la línea recta que corta el centro antiguo, iglesias, talleres, balcones y vida callejera. No es un monumento único: la gracia está en caminarla y dejar que aparezcan iglesias, plazas y comercios.',
+      'cappella sansevero': 'Qué ver: el Cristo Velato, esculturas alegóricas y la decoración barroca. Es una visita breve pero inolvidable por el nivel de detalle del mármol; conviene reservar porque el espacio es pequeño.',
+      'cristo velato': 'Qué ver: el velo de mármol que cubre la figura y los detalles del cuerpo debajo. La obra parece imposible por su técnica y es la razón principal para entrar a la Cappella Sansevero.',
+      'san gregorio armeno': 'Qué ver: talleres y puestos de figuras de pesebre, desde escenas religiosas hasta personajes actuales. Es una calle muy particular de Nápoles, llena de color y tradición artesanal.',
+      'santa chiara': 'Qué ver: la iglesia, el claustro decorado con mayólicas y los jardines. Es un lugar más tranquilo dentro del centro histórico y muestra una Nápoles religiosa, artística y mucho más silenciosa.',
+      'duomo di napoli': 'Qué ver: la nave, las capillas y la tradición de San Gennaro. Es una buena parada para completar el centro histórico, especialmente por la mezcla de estilos que cuenta la larga historia de la ciudad.',
+      positano: 'Qué ver: las casas de colores sobre el acantilado, la playa, la iglesia y los miradores de la ruta. Lo mejor es llegar temprano, caminar sin apuro y disfrutar la vista vertical antes de que aumente el tránsito.',
+      praiano: 'Qué ver: miradores, escaleras hacia el mar y la costa entre Positano y Amalfi. Es menos monumental y más tranquilo, ideal para parar con la moto y disfrutar el paisaje sin correr.',
+      'fiordo di furore': 'Qué ver: el puente, la pequeña playa y los acantilados que cierran la cala. Es una parada corta pero muy dramática; el contraste entre la carretera elevada y el mar abajo hace que valga la pena.',
+      amalfi: 'Qué ver: la Piazza Duomo, la Catedral, el claustro y el paseo del puerto. Es el centro histórico más reconocible de la costa y un buen lugar para almorzar y caminar antes de seguir.',
+      ravello: 'Qué ver: Villa Rufolo, Villa Cimbrone y sus terrazas sobre el mar. Está arriba de la costa, así que ofrece una perspectiva distinta y vistas enormes; conviene ir solo si los tiempos y la ruta lo permiten.',
+      'porto giunco': 'Qué ver: arena blanca, laguna, flamencos y agua muy poco profunda. Es una playa fuerte para el primer día porque impacta apenas llegan y permite pasar horas nadando y descansando.',
+      'capo carbonara': 'Qué ver: rocas, calas, senderos y agua transparente dentro del área protegida. Aunque no se haga una excursión completa, sus miradores explican la belleza de la costa de Villasimius.',
+      'punta molentis': 'Qué ver: la franja de arena entre dos aguas, rocas y vistas de la costa. Es una de las postales de Cerdeña; funciona como opcional porque puede tener mucha gente y requiere organizar bien el acceso.',
+      'barrio castello': 'Qué ver: murallas, callejuelas, edificios antiguos y miradores sobre Cagliari. Es el mejor lugar para entender la ciudad caminando y empezar el día con historia antes de ir a la playa.',
+      'bastione di saint remy': 'Qué ver: las terrazas, escaleras y la vista panorámica sobre Cagliari y el puerto. Es una parada corta, gratuita en el recorrido exterior y excelente para ubicarse geográficamente.',
+      'poetto beach': 'Qué ver: la larga playa urbana, el paseo, los chiringuitos y el agua del golfo. Es práctica porque queda cerca de Cagliari y permite trabajar después sin sacrificar un rato de mar.',
+      tuerredda: 'Qué ver: la forma de la bahía, el agua turquesa, la arena y el islote cercano. Es una de las playas más lindas del sur; conviene salir temprano para disfrutarla antes del calor y la cantidad de gente.',
+      'su giudeu': 'Qué ver: arena amplia, dunas, agua clara y el paisaje de Chia. Es una buena segunda parada si todavía hay energía después de Tuerredda y quieren sumar otro baño sin alejarse demasiado.',
+      chia: 'Qué ver: playas, dunas, torres y pequeñas calas del sur de Cerdeña. La zona combina paisaje natural con rutas fáciles en auto, por eso es ideal para improvisar según el clima.',
+      nora: 'Qué ver: ruinas púnicas y romanas junto al mar, mosaicos, termas y el antiguo teatro. Es especial porque la arqueología aparece integrada a un paisaje costero; no es solo visitar piedras, es imaginar una ciudad frente al Mediterráneo.',
+      pula: 'Qué ver: la plaza, calles del pueblo, restaurantes y el ambiente local. Sirve como complemento de Nora para comer algo y tener una pausa más cotidiana entre ruinas y playa.',
+      'santa margherita': 'Qué ver: la costa, playas largas y zonas de pinos entre Pula y Chia. Es una alternativa relajada para terminar el día con mar sin buscar otra gran atracción.',
+      'cala sinzias': 'Qué ver: arena clara, agua transparente y una costa abierta para pasar toda la mañana. Es una gran despedida de Cerdeña porque concentra el tipo de playa por el que se hace este desvío.',
+      'costa rei': 'Qué ver: playas extensas, pequeñas calas y paisaje mediterráneo sin grandes edificios. Conviene recorrerla con calma, elegir un tramo lindo y dejar tiempo para almorzar antes del regreso.',
+      'plaza de oriente': 'Qué ver: los jardines, las estatuas de reyes y la fachada del Palacio Real. Es el mejor comienzo para el Madrid histórico porque permite entrar caminando al conjunto monumental.',
+      'palacio real': 'Qué ver: escalinata, salones, armas, tapices y la decoración de la antigua residencia real. La visita muestra cómo vivía la monarquía española y merece tiempo, especialmente si les interesan interiores y arte.',
+      'catedral de la almudena': 'Qué ver: el interior, la cripta y la fachada frente al Palacio Real. Su mezcla de estilos es curiosa y completa el eje monumental de Plaza de Oriente.',
+      'plaza mayor': 'Qué ver: los soportales, la estatua de Felipe III y las fachadas rojas. Es una parada breve para cruzarla, sacar fotos y seguir hacia el Mercado de San Miguel y Sol.',
+      'mercado de san miguel': 'Qué ver: puestos de tapas, mariscos, quesos, dulces y vinos. Es más turístico y caro que un mercado común, pero sirve para probar varias cosas en poco tiempo.',
+      'puerta del sol': 'Qué ver: el Kilómetro Cero, el Oso y el Madroño y el movimiento del centro. Es un punto de paso más que de permanencia, perfecto para conectar Plaza Mayor con Gran Vía.',
+      'gran via': 'Qué ver: edificios, teatros, carteles luminosos, tiendas y el tramo hacia Plaza de España. Hay que caminarla al atardecer, cuando la avenida se enciende y aparece el Madrid más cinematográfico.',
+      'plaza de espana': 'Qué ver: el monumento a Cervantes, Don Quijote y los jardines renovados. Es una pausa amplia después de Gran Vía y el acceso natural hacia el Templo de Debod.',
+      'templo de debod': 'Qué ver: el templo egipcio, el mirador y la puesta de sol sobre la Casa de Campo. Es una de las mejores experiencias gratuitas de Madrid, especialmente cuando el cielo cambia de color detrás de la ciudad.',
+      malasana: 'Qué ver: plazas, bares, cafés, tiendas pequeñas y calles con mucha personalidad. Es ideal para cenar o tomar algo después del Madrid monumental, con un ambiente más joven y relajado.',
+      'museo del prado': 'Qué ver: Velázquez, Goya, El Bosco, Rubens y las salas principales de pintura europea. No intenten verlo todo: conviene elegir un recorrido de dos horas y disfrutar las obras más importantes con calma.',
+      'paseo del prado': 'Qué ver: el eje de museos, árboles, fuentes y edificios monumentales. Es una caminata cómoda que conecta el Prado con Cibeles y permite descansar entre visitas culturales.',
+      cibeles: 'Qué ver: la fuente, el Palacio de Cibeles y la perspectiva de las grandes avenidas. Es uno de los puntos más reconocibles de Madrid y una parada fotográfica obligada del paseo.',
+      'puerta de alcala': 'Qué ver: sus cinco arcos, esculturas y la vista hacia el Retiro. Es una parada rápida que funciona muy bien antes de entrar al parque.',
+      'parque del retiro': 'Qué ver: el Estanque Grande, el Palacio de Cristal, jardines y caminos arbolados. Es el lugar para bajar el ritmo después del museo: caminar, sentarse y ver cómo los madrileños usan su parque central.',
+      'estanque grande': 'Qué ver: el monumento a Alfonso XII, las barcas y la perspectiva del agua. Es la postal más clásica del Retiro y una zona agradable para descansar.',
+      'palacio de cristal': 'Qué ver: la estructura de vidrio, el lago y el entorno de árboles. Aunque la visita interior pueda variar, el exterior y el reflejo en el agua justifican desviarse.',
+      'barrio de las letras': 'Qué ver: calles con citas literarias, fachadas antiguas, bares y plazas pequeñas. Es un barrio ideal para caminar y cenar, especialmente si quieren una noche madrileña menos monumental.',
+      chueca: 'Qué ver: plazas, terrazas, restaurantes y calles llenas de vida. Es una buena alternativa para terminar el día porque concentra opciones para comer y tomar algo a poca distancia.',
+    };
+
+    const allPlaceData = [...attractionData, ...placeData].map((place) => ({
+      ...place,
+      description: detailedDescriptions[place.match] || place.description
+    }));
+
+    const preview = document.createElement('aside');
+    preview.className = 'place-preview';
+    preview.id = 'place-preview';
+    preview.setAttribute('role', 'tooltip');
+    preview.innerHTML = '<div class="place-preview-image"></div><h3></h3><p></p>';
+    document.body.append(preview);
+
+    const previewImage = preview.querySelector('.place-preview-image');
+    const previewTitle = preview.querySelector('h3');
+    const previewDescription = preview.querySelector('p');
+    let activePlace = null;
+
+    function normalize(value) {
+      return value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function findPlace(element) {
+      const text = normalize(element.textContent);
+      return allPlaceData.find((place) => text.includes(place.match));
+    }
+
+    function positionPreview(element) {
+      const bounds = element.getBoundingClientRect();
+      const margin = 12;
+      const preferredTop = bounds.bottom + 10;
+      const top = preferredTop + preview.offsetHeight <= window.innerHeight
+        ? preferredTop
+        : Math.max(margin, bounds.top - preview.offsetHeight - 10);
+      const left = Math.min(
+        Math.max(margin, bounds.left + (bounds.width / 2) - (preview.offsetWidth / 2)),
+        window.innerWidth - preview.offsetWidth - margin
+      );
+
+      preview.style.top = `${top}px`;
+      preview.style.left = `${left}px`;
+    }
+
+    function showPreview(element) {
+      const place = findPlace(element);
+      if (!place) return;
+
+      activePlace = element;
+      previewTitle.textContent = place.title;
+      previewDescription.textContent = place.description;
+      previewImage.classList.add('is-loading');
+      previewImage.innerHTML = `<span aria-hidden="true">${place.icon}</span>`;
+      const image = document.createElement('img');
+      image.alt = place.title;
+      image.loading = 'eager';
+      image.decoding = 'async';
+      image.fetchPriority = 'high';
+      image.addEventListener('load', () => previewImage.classList.remove('is-loading'), { once: true });
+      image.addEventListener('error', () => {
+        image.remove();
+        previewImage.classList.remove('is-loading');
+      }, { once: true });
+      image.src = place.image.replace('/900/520/', '/640/360/');
+      previewImage.append(image);
+      preview.classList.add('is-visible');
+      positionPreview(element);
+    }
+
+    function hidePreview(element) {
+      if (activePlace === element) {
+        activePlace = null;
+        preview.classList.remove('is-visible');
+      }
+    }
+
+    document.querySelectorAll('.activity').forEach((element) => {
+      if (!findPlace(element)) return;
+      element.classList.add('has-preview');
+      element.tabIndex = 0;
+      element.setAttribute('aria-describedby', preview.id);
+      element.addEventListener('mouseenter', () => showPreview(element));
+      element.addEventListener('mouseleave', () => hidePreview(element));
+      element.addEventListener('focus', () => showPreview(element));
+      element.addEventListener('blur', () => hidePreview(element));
+    });
+
+    window.addEventListener('resize', () => {
+      if (activePlace) positionPreview(activePlace);
+    });
+    window.addEventListener('scroll', () => {
+      if (activePlace) hidePreview(activePlace);
+    }, { passive: true });
+
+    function warmMainPlaceImages() {
+      placeData.forEach((place, index) => {
+        window.setTimeout(() => {
+          const image = new Image();
+          image.src = place.image.replace('/900/520/', '/640/360/');
+        }, index * 160);
+      });
+    }
+
+    window.addEventListener('load', () => {
+      const schedule = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 1200));
+      schedule(warmMainPlaceImages, { timeout: 3000 });
+    });
+  </script>
 </body>
 </html>
