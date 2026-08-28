@@ -85,7 +85,7 @@
 
     .layout {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 285px;
+      grid-template-columns: 1fr;
       gap: 18px;
       align-items: start;
       padding: 18px;
@@ -102,7 +102,7 @@
 
     .week {
       display: grid;
-      grid-template-columns: 112px repeat(7, minmax(110px, 1fr));
+      grid-template-columns: 128px repeat(7, minmax(130px, 1fr));
     }
 
     .week + .week { border-top: 1px solid var(--line); }
@@ -416,47 +416,6 @@
         </div>
       </section>
 
-      <aside class="sidebar">
-        <section class="panel">
-          <h2>Resumen del viaje</h2>
-          <dl class="facts">
-            <div class="fact"><dt>📅</dt><dd>31 días / 30 noches</dd></div>
-            <div class="fact"><dt>📍</dt><dd>9 ciudades principales</dd></div>
-            <div class="fact"><dt>📷</dt><dd>Playa + Ciudad + Cultura</dd></div>
-            <div class="fact"><dt>💻</dt><dd>Trabajo remoto incluido</dd></div>
-          </dl>
-        </section>
-
-        <section class="panel">
-          <h2>Ruta general</h2>
-          <ol class="route">
-            <li>Barcelona → Ibiza → Mallorca</li>
-            <li>→ Roma → Venecia</li>
-            <li>→ Nápoles → Sorrento / Amalfitana</li>
-            <li>→ Capri → Cerdeña → Madrid</li>
-          </ol>
-        </section>
-
-        <section class="panel">
-          <h2>Transportes principales</h2>
-          <ul class="notes">
-            <li>✈️ Vuelos internos</li>
-            <li>⛴️ Ferry (Ibiza → Mallorca)</li>
-            <li>🚆 Trenes de alta velocidad (Italia)</li>
-            <li>🛵 Moto (Costa Amalfitana)</li>
-            <li>📷 Caminatas / City Tours</li>
-          </ul>
-        </section>
-
-        <section class="panel">
-          <h2>Notas</h2>
-          <ul class="notes">
-            <li>Los días con 💻 incluyen tiempo de trabajo remoto.</li>
-            <li>🌴 Días ideales para playa y relax.</li>
-            <li>Itinerario flexible: se pueden ajustar actividades y horarios.</li>
-          </ul>
-        </section>
-      </aside>
     </section>
 
     <footer>✈️ Viaje Europa · Plan personal · Septiembre–Octubre 2026</footer>
