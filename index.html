@@ -140,6 +140,27 @@
 
     .day.empty { background: #fafcfd; }
 
+    .day[data-city] {
+      background: linear-gradient(145deg, #fff 0%, var(--city-tint) 100%);
+    }
+
+    .day[data-city="ezeiza"] { --city-tint: #edf3f8; }
+    .day[data-city="mexico"] { --city-tint: #fff1e8; }
+    .day[data-city="madrid"] { --city-tint: #fff8e6; }
+    .day[data-city="barcelona"] { --city-tint: #eef6fb; }
+    .day[data-city="ibiza"] { --city-tint: #eaf9f7; }
+    .day[data-city="mallorca"] { --city-tint: #fff7e8; }
+    .day[data-city="roma"] { --city-tint: #fff0ed; }
+    .day[data-city="napoles"] { --city-tint: #fff4e5; }
+    .day[data-city="amalfitana"] { --city-tint: #eaf8fb; }
+    .day[data-city="capri"] { --city-tint: #e9f8f8; }
+    .day[data-city="sorrento"] { --city-tint: #f5f6e8; }
+    .day[data-city="florencia"] { --city-tint: #f4f0fb; }
+    .day[data-city="toscana"] { --city-tint: #eef6e9; }
+    .day[data-city="venecia"] { --city-tint: #edf5f7; }
+    .day[data-city="cerdena"] { --city-tint: #eaf7fb; }
+    .day[data-city="argentina"] { --city-tint: #edf7fb; }
+
     .day-head {
       padding: 7px 6px;
       color: var(--white);
@@ -194,6 +215,23 @@
     }
 
     .activity strong { color: var(--ink); }
+
+    .activity.transport {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .activity.confirmed {
+      color: #2e7d32;
+      font-weight: 800;
+    }
+
+    .pending {
+      color: #c62828;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
 
     .empty .day-body { display: none; }
 
@@ -327,53 +365,53 @@
       <section class="itinerary" aria-label="Calendario del viaje">
         <div class="week">
           <div class="week-label"><div><span>Semana 1</span>España<br />y Baleares</div></div>
-          <article class="day"><div class="day-head">Domingo 13/09</div><div class="day-body"><div class="place">EZEIZA</div><div class="visual">🛫</div><div class="activity">💻 <strong>Trabajo remoto</strong></div><div class="activity">🌴 Playa / Relax</div></div></article>
-          <article class="day"><div class="day-head">Lunes 14/09</div><div class="day-body"><div class="place">VIAJE</div><div class="visual">🌅</div><div class="activity">✈️ En vuelo</div><div class="activity">🧳 Inicio de viaje</div></div></article>
-          <article class="day"><div class="day-head">Martes 15/09</div><div class="day-body"><div class="place">BARCELONA</div><div class="visual">🏛️</div><div class="activity">🛬 Llegada Madrid 05:00</div><div class="activity">🚆 Traslado a Barcelona</div></div></article>
-          <article class="day"><div class="day-head">Miércoles 16/09</div><div class="day-body"><div class="place">BARCELONA</div><div class="visual">🌆</div><div class="activity">💻 <strong>Trabajo</strong></div><div class="activity">📷 Recorrer la ciudad</div></div></article>
-          <article class="day"><div class="day-head">Jueves 17/09</div><div class="day-body"><div class="place">BARCELONA</div><div class="visual">🏙️</div><div class="activity">💻 <strong>Trabajo</strong></div><div class="activity">📷 Recorrer la ciudad</div></div></article>
-          <article class="day"><div class="day-head">Viernes 18/09</div><div class="day-body"><div class="place">BARCELONA → IBIZA</div><div class="visual">🌊</div><div class="activity">💻 Trabajo</div><div class="activity">✈️ 21:55 → 23:05</div></div></article>
-          <article class="day"><div class="day-head">Sábado 19/09</div><div class="day-body"><div class="place">IBIZA</div><div class="visual">🏖️</div><div class="activity">🎂 <strong>Cumpleaños</strong></div><div class="activity">🌴 Playa / Relax</div></div></article>
+          <article class="day" data-city="ezeiza"><div class="day-head">Domingo 13/09</div><div class="day-body"><div class="place">EZEIZA → MÉXICO</div><div class="visual">🛫</div><div class="activity confirmed">✈️ AM0029 · Sale 23:25</div><div class="activity confirmed">🛬 Llega 06:05 (14/09)</div></div></article>
+          <article class="day" data-city="mexico"><div class="day-head">Lunes 14/09</div><div class="day-body"><div class="place">MÉXICO → MADRID</div><div class="visual">✈️</div><div class="activity confirmed">✈️ AM0027 · Sale 10:05</div><div class="activity confirmed">🧳 En vuelo a Madrid</div></div></article>
+          <article class="day" data-city="madrid"><div class="day-head">Martes 15/09</div><div class="day-body"><div class="place">MADRID → BARCELONA</div><div class="visual">🏛️</div><div class="activity confirmed">🛬 AM0027 · Llega 05:00</div><div class="activity transport">🚆 Traslado a Barcelona</div></div></article>
+          <article class="day" data-city="barcelona"><div class="day-head">Miércoles 16/09</div><div class="day-body"><div class="place">BARCELONA</div><div class="visual">🌆</div><div class="activity">📷 Recorrer la ciudad</div></div></article>
+          <article class="day" data-city="barcelona"><div class="day-head">Jueves 17/09</div><div class="day-body"><div class="place">BARCELONA</div><div class="visual">🏙️</div><div class="activity">📷 Recorrer la ciudad</div></div></article>
+          <article class="day" data-city="ibiza"><div class="day-head">Viernes 18/09</div><div class="day-body"><div class="place">BARCELONA → IBIZA</div><div class="visual">🌊</div><div class="activity confirmed">✈️ Ryanair · 21:55 → 23:05</div></div></article>
+          <article class="day" data-city="ibiza"><div class="day-head">Sábado 19/09</div><div class="day-body"><div class="place">IBIZA</div><div class="visual">🏖️</div><div class="activity">🎂 <strong>Cumpleaños · 11:00–18:00</strong></div><div class="activity">🌴 Playa / Relax</div></div></article>
         </div>
 
         <div class="week">
-          <div class="week-label"><div><span>Semana 1</span>España<br />y Baleares</div></div>
-          <article class="day"><div class="day-head">Domingo 20/09</div><div class="day-body"><div class="place">IBIZA → MALLORCA</div><div class="visual">⛴️</div><div class="activity">🌴 Playa en Ibiza</div><div class="activity">⛴️ Ferry a Palma</div></div></article>
-          <article class="day"><div class="day-head">Lunes 21/09</div><div class="day-body"><div class="place">MALLORCA</div><div class="visual">🏝️</div><div class="activity">🌴 Calas / Playa</div><div class="activity">💻 <strong>Trabajo</strong></div></div></article>
-          <article class="day"><div class="day-head">Martes 22/09</div><div class="day-body"><div class="place">MALLORCA</div><div class="visual">🌊</div><div class="activity">🌴 Calas / Playa</div><div class="activity">💻 <strong>Trabajo</strong></div></div></article>
-          <article class="day"><div class="day-head">Miércoles 23/09</div><div class="day-body"><div class="place">MALLORCA → ROMA</div><div class="visual">✈️</div><div class="activity">🌴 Día en Mallorca</div><div class="activity">✈️ 20:45 → 22:30</div></div></article>
-          <article class="day"><div class="day-head">Jueves 24/09</div><div class="day-body"><div class="place">ROMA</div><div class="visual">🏛️</div><div class="activity">💻 <strong>Trabajo</strong></div><div class="activity">📷 Recorrer la ciudad</div></div></article>
-          <article class="day"><div class="day-head">Viernes 25/09</div><div class="day-body"><div class="place">ROMA / VATICANO</div><div class="visual">⛪</div><div class="activity">⛪ Vaticano temprano</div><div class="activity">💻 <strong>Trabajo</strong></div></div></article>
-          <article class="day"><div class="day-head">Sábado 26/09</div><div class="day-body"><div class="place">ROMA</div><div class="visual">🏛️</div><div class="activity">📷 Día completo</div><div class="activity">por la ciudad</div></div></article>
+          <div class="week-label"><div><span>Semana 2</span>Mallorca<br />y Roma</div></div>
+          <article class="day" data-city="mallorca"><div class="day-head">Domingo 20/09</div><div class="day-body"><div class="place">IBIZA → MALLORCA</div><div class="visual">⛴️</div><div class="activity transport">⛴️ Baleària · 20:00 → 22:15</div><div class="activity"><span class="pending">Falta comprarlo</span></div></div></article>
+          <article class="day" data-city="mallorca"><div class="day-head">Lunes 21/09</div><div class="day-body"><div class="place">MALLORCA</div><div class="visual">🏝️</div><div class="activity">🌴 Calas / Playa</div></div></article>
+          <article class="day" data-city="mallorca"><div class="day-head">Martes 22/09</div><div class="day-body"><div class="place">MALLORCA</div><div class="visual">🌊</div><div class="activity">🌴 Calas / Playa</div></div></article>
+          <article class="day" data-city="mallorca"><div class="day-head">Miércoles 23/09</div><div class="day-body"><div class="place">MALLORCA → ROMA</div><div class="visual">✈️</div><div class="activity">🌴 Día en Mallorca</div><div class="activity confirmed">✈️ Sale 20:45 · Llega 22:30</div></div></article>
+          <article class="day" data-city="roma"><div class="day-head">Jueves 24/09</div><div class="day-body"><div class="place">ROMA</div><div class="visual">🏛️</div><div class="activity">📷 Recorrer la ciudad</div></div></article>
+          <article class="day" data-city="roma"><div class="day-head">Viernes 25/09</div><div class="day-body"><div class="place">ROMA / VATICANO</div><div class="visual">⛪</div><div class="activity">⛪ Vaticano temprano</div></div></article>
+          <article class="day" data-city="roma"><div class="day-head">Sábado 26/09</div><div class="day-body"><div class="place">ROMA</div><div class="visual">🏛️</div><div class="activity">📷 Día completo en Roma</div><div class="activity">🌙 Noche en Roma</div></div></article>
         </div>
 
         <div class="week">
-          <div class="week-label"><div><span>Semana 2</span>Italia: Roma,<br />Nápoles y Costa<br />Amalfitana</div></div>
-          <article class="day"><div class="day-head">Domingo 27/09</div><div class="day-body"><div class="place">ROMA → NÁPOLES</div><div class="visual">🚆</div><div class="activity">🚆 Tren temprano</div><div class="activity">📷 Nápoles</div></div></article>
-          <article class="day"><div class="day-head">Lunes 28/09</div><div class="day-body"><div class="place">COSTA AMALFITANA</div><div class="visual">🌊</div><div class="activity">🌴 Positano / Amalfi</div><div class="activity">💻 <strong>Trabajo</strong></div></div></article>
-          <article class="day"><div class="day-head">Martes 29/09</div><div class="day-body"><div class="place">CAPRI</div><div class="visual">⛵</div><div class="activity">⛴️ Capri temprano</div><div class="activity">💻 <strong>Trabajo</strong></div></div></article>
-          <article class="day"><div class="day-head">Miércoles 30/09</div><div class="day-body"><div class="place">SORRENTO → FLORENCIA</div><div class="visual">🚆</div><div class="activity">🚆 Traslado temprano</div><div class="activity">💻 <strong>Trabajo</strong></div></div></article>
-          <article class="day"><div class="day-head">Jueves 01/10</div><div class="day-body"><div class="place">FLORENCIA</div><div class="visual">🏛️</div><div class="activity">📷 Recorrer la ciudad</div><div class="activity">💻 <strong>Trabajo</strong></div></div></article>
-          <article class="day"><div class="day-head">Viernes 02/10</div><div class="day-body"><div class="place">FLORENCIA / TOSCANA</div><div class="visual">🍇</div><div class="activity">🌾 Toscana / Viñedos</div><div class="activity">💻 <strong>Trabajo</strong></div></div></article>
-          <article class="day"><div class="day-head">Sábado 03/10</div><div class="day-body"><div class="place">TOSCANA</div><div class="visual">🍷</div><div class="activity">🏘️ Siena / San Gimignano</div><div class="activity">🍷 Chianti</div></div></article>
+          <div class="week-label"><div><span>Semana 3</span>Venecia,<br />Nápoles y<br />Costa Amalfitana</div></div>
+          <article class="day" data-city="venecia"><div class="day-head">Domingo 27/09</div><div class="day-body"><div class="place">ROMA → VENECIA</div><div class="visual">🚄</div><div class="activity transport">🚆 Alta velocidad temprano</div><div class="activity"><span class="pending">Falta comprar</span></div></div></article>
+          <article class="day" data-city="venecia"><div class="day-head">Lunes 28/09</div><div class="day-body"><div class="place">VENECIA</div><div class="visual">🚤</div><div class="activity">📷 Día en Venecia</div><div class="activity">🌙 Noche en Venecia</div></div></article>
+          <article class="day" data-city="napoles"><div class="day-head">Martes 29/09</div><div class="day-body"><div class="place">VENECIA → NÁPOLES</div><div class="visual">🚄</div><div class="activity transport">🚆 Tren de alta velocidad</div><div class="activity"><span class="pending">Falta comprar</span></div><div class="activity">🌙 1.ª noche en Nápoles</div></div></article>
+          <article class="day" data-city="napoles"><div class="day-head">Miércoles 30/09</div><div class="day-body"><div class="place">NÁPOLES CENTRO</div><div class="visual">🏛️</div><div class="activity">📷 Recorrer el centro</div><div class="activity">🌙 2.ª noche en Nápoles</div></div></article>
+          <article class="day" data-city="sorrento"><div class="day-head">Jueves 01/10</div><div class="day-body"><div class="place">NÁPOLES → SORRENTO</div><div class="visual">🛵</div><div class="activity transport">🧳 Viaje a Sorrento</div><div class="activity">🛵 Costa Amalfitana en moto</div></div></article>
+          <article class="day" data-city="sorrento"><div class="day-head">Viernes 02/10</div><div class="day-body"><div class="place">SORRENTO</div><div class="visual">🌊</div><div class="activity">📷 Recorrer Sorrento</div><div class="activity">🌙 Noche en Sorrento</div></div></article>
+          <article class="day" data-city="capri"><div class="day-head">Sábado 03/10</div><div class="day-body"><div class="place">CAPRI → SORRENTO</div><div class="visual">⛵</div><div class="activity">⛵ Excursión a Capri</div><div class="activity transport">↩️ Regreso a Sorrento</div></div></article>
         </div>
 
         <div class="week">
-          <div class="week-label"><div><span>Semana 3</span>Toscana<br />y Venecia</div></div>
-          <article class="day"><div class="day-head">Domingo 04/10</div><div class="day-body"><div class="place">FLORENCIA → VENECIA</div><div class="visual">🚄</div><div class="activity">🚆 Tren temprano</div><div class="activity">📍 Llegada a Venecia</div></div></article>
-          <article class="day"><div class="day-head">Lunes 05/10</div><div class="day-body"><div class="place">VENECIA</div><div class="visual">🚤</div><div class="activity">💻 <strong>Trabajo</strong></div><div class="activity">📷 Recorrer la ciudad</div></div></article>
-          <article class="day"><div class="day-head">Martes 06/10</div><div class="day-body"><div class="place">VENECIA → CERDEÑA</div><div class="visual">✈️</div><div class="activity">💻 <strong>Trabajo</strong></div><div class="activity">✈️ 20:25 → 21:55</div></div></article>
-          <article class="day"><div class="day-head">Miércoles 07/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🏝️</div><div class="activity">🌴 Playa / Relax</div><div class="activity">💻 <strong>Trabajo</strong></div></div></article>
-          <article class="day"><div class="day-head">Jueves 08/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🌊</div><div class="activity">🌴 Playa / Relax</div><div class="activity">💻 <strong>Trabajo</strong></div></div></article>
-          <article class="day"><div class="day-head">Viernes 09/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">☀️</div><div class="activity">🌴 Playa / Relax</div><div class="activity">💻 <strong>Trabajo</strong></div></div></article>
-          <article class="day"><div class="day-head">Sábado 10/10</div><div class="day-body"><div class="place">CERDEÑA → MADRID</div><div class="visual">🛫</div><div class="activity">🌴 Mañana de playa</div><div class="activity">✈️ 16:00 → 18:15</div></div></article>
+          <div class="week-label"><div><span>Semana 4</span>Cerdeña<br />y Madrid</div></div>
+          <article class="day" data-city="cerdena"><div class="day-head">Domingo 04/10</div><div class="day-body"><div class="place">SORRENTO → NÁPOLES → CAGLIARI</div><div class="visual">✈️</div><div class="activity transport">🧳 Traslado a Nápoles</div><div class="activity"><span class="pending">Falta comprarlo</span></div><div class="activity transport">✈️ Ryanair FR2197 · 07:35 → 08:50</div><div class="activity transport">🛫 Operado por Malta Air</div><div class="activity"><span class="pending">Falta comprarlo</span></div></div></article>
+          <article class="day" data-city="cerdena"><div class="day-head">Lunes 05/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🌊</div><div class="activity">🌴 Playa / Relax</div><div class="activity">📍 Día en Cerdeña</div></div></article>
+          <article class="day" data-city="cerdena"><div class="day-head">Martes 06/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🏝️</div><div class="activity">🌴 Playa / Relax</div><div class="activity">📍 Día en Cerdeña</div></div></article>
+          <article class="day" data-city="cerdena"><div class="day-head">Miércoles 07/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🏝️</div><div class="activity">🌴 Playa / Relax</div><div class="activity">📍 Día en Cerdeña</div></div></article>
+          <article class="day" data-city="cerdena"><div class="day-head">Jueves 08/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🌊</div><div class="activity">🌴 Playa / Relax</div><div class="activity">📍 Último día en Cerdeña</div></div></article>
+          <article class="day" data-city="madrid"><div class="day-head">Viernes 09/10</div><div class="day-body"><div class="place">CERDEÑA → MADRID</div><div class="visual">🛫</div><div class="activity">🌴 Mañana de playa</div><div class="activity transport">✈️ 16:00 → 18:15</div><div class="activity"><span class="pending">Falta comprarlo</span></div></div></article>
+          <article class="day" data-city="madrid"><div class="day-head">Sábado 10/10</div><div class="day-body"><div class="place">MADRID</div><div class="visual">🏙️</div><div class="activity">📷 Llegada y paseo</div><div class="activity">🌙 Noche en Madrid</div></div></article>
         </div>
 
         <div class="week">
-          <div class="week-label"><div><span>Semana 4</span>Cerdeña<br />y regreso</div></div>
-          <article class="day"><div class="day-head">Domingo 11/10</div><div class="day-body"><div class="place">MADRID</div><div class="visual">🏙️</div><div class="activity">📷 Día completo</div><div class="activity">por la ciudad</div></div></article>
-          <article class="day"><div class="day-head">Lunes 12/10</div><div class="day-body"><div class="place">MADRID</div><div class="visual">☕</div><div class="activity">💻 <strong>Trabajo</strong></div><div class="activity">✈️ 23:35</div></div></article>
-          <article class="day"><div class="day-head">Martes 13/10</div><div class="day-body"><div class="place">ARGENTINA</div><div class="visual">🇦🇷</div><div class="activity">🛬 Llegada EZE 21:25</div><div class="activity">🏁 Fin del viaje</div></div></article>
+          <div class="week-label"><div><span>Semana 5</span>Madrid<br />y regreso</div></div>
+          <article class="day" data-city="madrid"><div class="day-head">Domingo 11/10</div><div class="day-body"><div class="place">MADRID</div><div class="visual">🏙️</div><div class="activity">📷 Día completo</div><div class="activity">por la ciudad</div></div></article>
+          <article class="day" data-city="madrid"><div class="day-head">Lunes 12/10</div><div class="day-body"><div class="place">MADRID → MÉXICO</div><div class="visual">☕</div><div class="activity confirmed">✈️ AM0022 · Sale 23:35</div></div></article>
+          <article class="day" data-city="argentina"><div class="day-head">Martes 13/10</div><div class="day-body"><div class="place">MÉXICO → EZEIZA</div><div class="visual">🇦🇷</div><div class="activity confirmed">🛬 AM0022 · Llega 03:45</div><div class="activity confirmed">✈️ AM0030 · Sale 09:10 · Llega 21:25</div></div></article>
           <div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div>
         </div>
       </section>
@@ -393,9 +431,9 @@
           <h2>Ruta general</h2>
           <ol class="route">
             <li>Barcelona → Ibiza → Mallorca</li>
-            <li>→ Roma → Nápoles / Amalfitana</li>
-            <li>→ Florencia / Toscana → Venecia</li>
-            <li>→ Cerdeña → Madrid</li>
+            <li>→ Roma → Venecia</li>
+            <li>→ Nápoles → Sorrento / Amalfitana</li>
+            <li>→ Capri → Cerdeña → Madrid</li>
           </ol>
         </section>
 
@@ -404,7 +442,8 @@
           <ul class="notes">
             <li>✈️ Vuelos internos</li>
             <li>⛴️ Ferry (Ibiza → Mallorca)</li>
-            <li>🚆 Trenes (Italia)</li>
+            <li>🚆 Trenes de alta velocidad (Italia)</li>
+            <li>🛵 Moto (Costa Amalfitana)</li>
             <li>📷 Caminatas / City Tours</li>
           </ul>
         </section>
