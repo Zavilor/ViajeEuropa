@@ -132,6 +132,8 @@
     }
 
     .day {
+      display: flex;
+      flex-direction: column;
       min-width: 0;
       min-height: 235px;
       background: #fff;
@@ -171,7 +173,12 @@
       text-transform: uppercase;
     }
 
-    .day-body { padding: 9px 8px 11px; }
+    .day-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 9px 8px 11px;
+    }
 
     .place {
       min-height: 31px;
@@ -182,7 +189,7 @@
     }
 
     .visual {
-      display: grid;
+      display: none;
       height: 70px;
       place-items: center;
       margin: 5px 0 8px;
@@ -207,11 +214,24 @@
     }
 
     .activity {
-      display: flex;
-      gap: 5px;
+      display: block;
       margin-top: 5px;
       color: var(--muted);
       font-size: 11px;
+    }
+
+    .meetings {
+      display: grid;
+      gap: 2px;
+      margin-top: auto;
+      padding-top: 8px;
+      color: #536b7c;
+      font-size: 10px;
+      line-height: 1.25;
+    }
+
+    .clock {
+      font-weight: 800;
     }
 
     .activity strong { color: var(--ink); }
@@ -235,6 +255,11 @@
     }
 
     .pending:hover { text-decoration: underline; }
+
+    .leave {
+      color: #7b1fa2;
+      font-weight: 700;
+    }
 
     .empty .day-body { display: none; }
 
@@ -368,44 +393,44 @@
       <section class="itinerary" aria-label="Calendario del viaje">
         <div class="week">
           <div class="week-label"><div><span>Semana 1</span>España<br />y Baleares</div></div>
-          <article class="day" data-city="ezeiza"><div class="day-head">Domingo 13/09</div><div class="day-body"><div class="place">EZEIZA → MÉXICO</div><div class="visual">🛫</div><div class="activity confirmed">✈️ AM0029 · Sale 23:25</div><div class="activity confirmed">🛬 Llega 06:05 (14/09)</div></div></article>
-          <article class="day" data-city="mexico"><div class="day-head">Lunes 14/09</div><div class="day-body"><div class="place">MÉXICO → MADRID</div><div class="visual">✈️</div><div class="activity confirmed">✈️ AM0027 · Sale 10:05</div><div class="activity confirmed">🧳 En vuelo a Madrid</div></div></article>
-          <article class="day" data-city="madrid"><div class="day-head">Martes 15/09</div><div class="day-body"><div class="place">MADRID → BARCELONA</div><div class="visual">🏛️</div><div class="activity confirmed">🛬 AM0027 · Llega 05:00</div><div class="activity transport">🚆 Traslado a Barcelona</div></div></article>
-          <article class="day" data-city="barcelona"><div class="day-head">Miércoles 16/09</div><div class="day-body"><div class="place">BARCELONA</div><div class="visual">🌆</div><div class="activity">📷 Recorrer la ciudad</div></div></article>
-          <article class="day" data-city="barcelona"><div class="day-head">Jueves 17/09</div><div class="day-body"><div class="place">BARCELONA</div><div class="visual">🏙️</div><div class="activity">📷 Recorrer la ciudad</div></div></article>
-          <article class="day" data-city="ibiza"><div class="day-head">Viernes 18/09</div><div class="day-body"><div class="place">BARCELONA → IBIZA</div><div class="visual">🌊</div><div class="activity confirmed">✈️ Ryanair · 21:55 → 23:05</div></div></article>
-          <article class="day" data-city="ibiza"><div class="day-head">Sábado 19/09</div><div class="day-body"><div class="place">IBIZA</div><div class="visual">🏖️</div><div class="activity">🎂 <strong>Cumpleaños · 11:00–18:00</strong></div><div class="activity">🌴 Playa / Relax</div></div></article>
+          <article class="day" data-city="ezeiza"><div class="day-head">Domingo 13/09</div><div class="day-body"><div class="place">EZEIZA → MÉXICO</div><div class="visual">🛫</div><div class="activity confirmed">✈️ AM0029 · Sale <strong class="clock">23:25</strong></div><div class="activity confirmed">🛬 Llega <strong class="clock">06:05 (14/09)</strong></div></div></article>
+          <article class="day" data-city="mexico"><div class="day-head">Lunes 14/09</div><div class="day-body"><div class="place">MÉXICO → MADRID</div><div class="visual">✈️</div><div class="activity confirmed">✈️ AM0027 · Sale <strong class="clock">10:05</strong></div><div class="activity confirmed">🧳 En vuelo a Madrid</div><div class="activity"><span class="leave">📅 Pedir licencia · Día sin trabajo</span></div></div></article>
+          <article class="day" data-city="barcelona"><div class="day-head">Martes 15/09</div><div class="day-body"><div class="place">MADRID → BARCELONA</div><div class="visual">🏛️</div><div class="activity confirmed">🛬 AM0027 · Llega <strong class="clock">05:00</strong></div><div class="activity transport">🚆 Traslado a Barcelona</div><div class="activity"><span class="pending">Falta comprar</span></div><div class="activity">📍 <strong class="clock">13:00</strong> aprox. · Dejar valijas</div><div class="activity">🚶 <strong class="clock">13:00–15:15</strong> · Caminando</div><div class="activity">📍 Barrio Gótico → Catedral → Plaça Reial → El Born</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div></div></article>
+          <article class="day" data-city="barcelona"><div class="day-head">Miércoles 16/09</div><div class="day-body"><div class="place">BARCELONA</div><div class="visual">🌆</div><div class="activity"><strong class="clock">09:00–10:45</strong> · Sagrada Familia</div><div class="activity"><strong class="clock">10:45–11:30</strong> · Caminar hacia Sant Pau</div><div class="activity"><strong class="clock">12:00–13:45</strong> · Passeig de Gràcia + Casa Batlló</div><div class="activity"><strong class="clock">13:45–15:00</strong> · Almuerzo / regreso</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div></div></article>
+          <article class="day" data-city="barcelona"><div class="day-head">Jueves 17/09</div><div class="day-body"><div class="place">BARCELONA</div><div class="visual">🏙️</div><div class="activity"><strong class="clock">09:00–11:00</strong> · 🔥 Park Güell</div><div class="activity"><strong class="clock">11:00–12:00</strong> · Gràcia</div><div class="activity"><strong class="clock">12:30–13:15</strong> · La Boqueria + Ramblas</div><div class="activity"><strong class="clock">13:15–14:15</strong> · Almuerzo</div><div class="activity"><strong class="clock">14:15–15:15</strong> · Plaça Catalunya / paseo tranquilo</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div></div></article>
+          <article class="day" data-city="ibiza"><div class="day-head">Viernes 18/09</div><div class="day-body"><div class="place">BARCELONA → IBIZA</div><div class="visual">🌊</div><div class="activity"><strong class="clock">09:00–12:00</strong> · Montjuïc: miradores + zona Olímpica / castillo según ganas</div><div class="activity"><strong class="clock">12:00–14:00</strong> · Port Vell / Barceloneta + almuerzo</div><div class="activity"><strong class="clock">~14:30</strong> · Hotel, valijas y preparar salida</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div><div class="activity confirmed">✈️ Ryanair · <strong class="clock">21:55 → 23:05</strong></div></div></article>
+          <article class="day" data-city="ibiza"><div class="day-head">Sábado 19/09</div><div class="day-body"><div class="place">IBIZA</div><div class="visual">🏖️</div><div class="activity"><strong class="clock">08:30–10:15</strong> · Dalt Vila + puerto de Ibiza</div><div class="activity">🎂 <strong class="clock">11:00–18:00</strong> · Cumpleaños</div><div class="activity"><strong class="clock">18:15–20:15</strong> · Sunset: Cala Comte / oeste de la isla</div><div class="activity">🌙 Noche · Cena + Ibiza ciudad</div></div></article>
         </div>
 
         <div class="week">
           <div class="week-label"><div><span>Semana 2</span>Mallorca<br />y Roma</div></div>
-          <article class="day" data-city="mallorca"><div class="day-head">Domingo 20/09</div><div class="day-body"><div class="place">IBIZA → MALLORCA</div><div class="visual">⛴️</div><div class="activity transport">⛴️ Baleària · 20:00 → 22:15</div><div class="activity"><span class="pending">Falta comprarlo</span></div></div></article>
-          <article class="day" data-city="mallorca"><div class="day-head">Lunes 21/09</div><div class="day-body"><div class="place">MALLORCA</div><div class="visual">🏝️</div><div class="activity">🌴 Calas / Playa</div></div></article>
-          <article class="day" data-city="mallorca"><div class="day-head">Martes 22/09</div><div class="day-body"><div class="place">MALLORCA</div><div class="visual">🌊</div><div class="activity">🌴 Calas / Playa</div></div></article>
-          <article class="day" data-city="mallorca"><div class="day-head">Miércoles 23/09</div><div class="day-body"><div class="place">MALLORCA → ROMA</div><div class="visual">✈️</div><div class="activity">🌴 Día en Mallorca</div><div class="activity confirmed">✈️ Sale 20:45 · Llega 22:30</div></div></article>
-          <article class="day" data-city="roma"><div class="day-head">Jueves 24/09</div><div class="day-body"><div class="place">ROMA</div><div class="visual">🏛️</div><div class="activity">📷 Recorrer la ciudad</div></div></article>
-          <article class="day" data-city="roma"><div class="day-head">Viernes 25/09</div><div class="day-body"><div class="place">ROMA / VATICANO</div><div class="visual">⛪</div><div class="activity">⛪ Vaticano temprano</div></div></article>
+          <article class="day" data-city="mallorca"><div class="day-head">Domingo 20/09</div><div class="day-body"><div class="place">IBIZA → MALLORCA</div><div class="visual">⛴️</div><div class="activity"><strong class="clock">09:00–12:00</strong> · Cala d'Hort + vistas de Es Vedrà</div><div class="activity"><strong class="clock">12:30–17:00</strong> · Cala Comte o Cala Bassa → playa + almuerzo + relax</div><div class="activity"><strong class="clock">17:00–18:15</strong> · Volver, ducha y valijas</div><div class="activity"><strong class="clock">~19:00</strong> · Puerto</div><div class="activity transport">⛴️ Ferry Baleària · <strong class="clock">20:00 → 22:15</strong></div><div class="activity"><a class="pending" href="https://www.nlg.it/en/online-booking/" target="_blank" rel="noopener">Falta comprarlo</a></div></div></article>
+          <article class="day" data-city="mallorca"><div class="day-head">Lunes 21/09</div><div class="day-body"><div class="place">MALLORCA</div><div class="visual">🏝️</div><div class="activity"><strong class="clock">08:30–09:30</strong> · Desayuno + casco antiguo</div><div class="activity"><strong class="clock">09:30–11:00</strong> · Catedral La Seu</div><div class="activity"><strong class="clock">11:00–11:45</strong> · Palacio de la Almudaina / alrededores</div><div class="activity"><strong class="clock">11:45–12:45</strong> · La Lonja + calles del centro histórico</div><div class="activity"><strong class="clock">12:45–14:00</strong> · Almuerzo</div><div class="activity"><strong class="clock">14:00–15:00</strong> · Paseo marítimo / volver al alojamiento</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div></div></article>
+          <article class="day" data-city="mallorca"><div class="day-head">Martes 22/09</div><div class="day-body"><div class="place">MALLORCA</div><div class="visual">🌊</div><div class="activity"><strong class="clock">07:30/08:00</strong> · Palma → Valldemossa → Deià → Sóller → Port de Sóller</div><div class="activity"><strong class="clock">08:30–09:45</strong> · Valldemossa</div><div class="activity"><strong class="clock">10:15–11:00</strong> · Deià</div><div class="activity"><strong class="clock">11:30–12:30</strong> · Sóller</div><div class="activity"><strong class="clock">12:40–13:40</strong> · Port de Sóller + comer algo</div><div class="activity"><strong class="clock">13:45</strong> · Regreso a Palma</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div></div></article>
+          <article class="day" data-city="mallorca"><div class="day-head">Miércoles 23/09</div><div class="day-body"><div class="place">MALLORCA → ROMA</div><div class="visual">✈️</div><div class="activity"><strong class="clock">08:00</strong> · Salida de Palma</div><div class="activity"><strong class="clock">09:00–12:30</strong> · Es Trenc 🏖️ (Playa)</div><div class="activity"><strong class="clock">12:30–13:15</strong> · Comer algo</div><div class="activity"><strong class="clock">13:15–14:15</strong> · Regreso</div><div class="activity"><strong class="clock">14:15–15:00</strong> · Ducha + valijas</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div><div class="activity confirmed">✈️ Sale <strong class="clock">20:45</strong> · Llega <strong class="clock">22:30</strong></div></div></article>
+          <article class="day" data-city="roma"><div class="day-head">Jueves 24/09</div><div class="day-body"><div class="place">ROMA</div><div class="visual">🏛️</div><div class="activity">📷 Recorrer la ciudad</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div></div></article>
+          <article class="day" data-city="roma"><div class="day-head">Viernes 25/09</div><div class="day-body"><div class="place">ROMA / VATICANO</div><div class="visual">⛪</div><div class="activity">⛪ Vaticano temprano</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div></div></article>
           <article class="day" data-city="roma"><div class="day-head">Sábado 26/09</div><div class="day-body"><div class="place">ROMA</div><div class="visual">🏛️</div><div class="activity">📷 Día completo en Roma</div><div class="activity">🌙 Noche en Roma</div></div></article>
         </div>
 
         <div class="week">
           <div class="week-label"><div><span>Semana 3</span>Venecia,<br />Nápoles y<br />Costa Amalfitana</div></div>
           <article class="day" data-city="venecia"><div class="day-head">Domingo 27/09</div><div class="day-body"><div class="place">ROMA → VENECIA</div><div class="visual">🚄</div><div class="activity transport">🚆 Alta velocidad temprano</div><div class="activity"><span class="pending">Falta comprar</span></div></div></article>
-          <article class="day" data-city="venecia"><div class="day-head">Lunes 28/09</div><div class="day-body"><div class="place">VENECIA</div><div class="visual">🚤</div><div class="activity">📷 Día en Venecia</div><div class="activity">🌙 Noche en Venecia</div></div></article>
+          <article class="day" data-city="venecia"><div class="day-head">Lunes 28/09</div><div class="day-body"><div class="place">VENECIA</div><div class="visual">🚤</div><div class="activity">📷 Día en Venecia</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div><div class="activity">🌙 Noche en Venecia</div></div></article>
           <article class="day" data-city="napoles"><div class="day-head">Martes 29/09</div><div class="day-body"><div class="place">VENECIA → NÁPOLES</div><div class="visual">🚄</div><div class="activity transport">🚆 Tren de alta velocidad</div><div class="activity"><span class="pending">Falta comprar</span></div><div class="activity">🌙 1.ª noche en Nápoles</div></div></article>
-          <article class="day" data-city="napoles"><div class="day-head">Miércoles 30/09</div><div class="day-body"><div class="place">NÁPOLES CENTRO</div><div class="visual">🏛️</div><div class="activity">📷 Recorrer el centro</div><div class="activity">🌙 2.ª noche en Nápoles</div></div></article>
+          <article class="day" data-city="napoles"><div class="day-head">Miércoles 30/09</div><div class="day-body"><div class="place">NÁPOLES CENTRO</div><div class="visual">🏛️</div><div class="activity">📷 Recorrer el centro</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div><div class="activity">🌙 2.ª noche en Nápoles</div></div></article>
           <article class="day" data-city="sorrento"><div class="day-head">Jueves 01/10</div><div class="day-body"><div class="place">NÁPOLES → SORRENTO</div><div class="visual">🛵</div><div class="activity transport">🧳 Viaje a Sorrento</div><div class="activity">🛵 Costa Amalfitana en moto</div></div></article>
           <article class="day" data-city="capri"><div class="day-head">Viernes 02/10</div><div class="day-body"><div class="place">SORRENTO → CAPRI</div><div class="visual">⛵</div><div class="activity">⛵ Excursión a Capri</div><div class="activity transport">↩️ Regreso a Sorrento</div></div></article>
-          <article class="day" data-city="sorrento"><div class="day-head">Sábado 03/10</div><div class="day-body"><div class="place">SORRENTO → NÁPOLES</div><div class="visual">⛴️</div><div class="activity">📷 Recorrer Sorrento</div><div class="activity transport">⛴️ Ferry · 17:00 · 45 min · €41</div><div class="activity"><a class="pending" href="https://www.nlg.it/en/online-booking/" target="_blank" rel="noopener">Falta comprarlo</a></div></div></article>
+          <article class="day" data-city="sorrento"><div class="day-head">Sábado 03/10</div><div class="day-body"><div class="place">SORRENTO → NÁPOLES</div><div class="visual">⛴️</div><div class="activity">📷 Recorrer Sorrento</div><div class="activity transport">⛴️ Ferry · <strong class="clock">17:00</strong> · 45 min · €41</div><div class="activity"><a class="pending" href="https://www.nlg.it/en/online-booking/" target="_blank" rel="noopener">Falta comprarlo</a></div></div></article>
         </div>
 
         <div class="week">
           <div class="week-label"><div><span>Semana 4</span>Cerdeña<br />y Madrid</div></div>
-          <article class="day" data-city="cerdena"><div class="day-head">Domingo 04/10</div><div class="day-body"><div class="place">NÁPOLES → CAGLIARI</div><div class="visual">✈️</div><div class="activity confirmed">✈️ Ryanair FR2197 · 07:35 → 08:50</div><div class="activity confirmed">🛫 Operado por Malta Air</div><div class="activity"><span class="pending">Falta comprarlo</span></div></div></article>
-          <article class="day" data-city="cerdena"><div class="day-head">Lunes 05/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🌊</div><div class="activity">🌴 Playa / Relax</div><div class="activity">📍 Día en Cerdeña</div></div></article>
-          <article class="day" data-city="cerdena"><div class="day-head">Martes 06/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🏝️</div><div class="activity">🌴 Playa / Relax</div><div class="activity">📍 Día en Cerdeña</div></div></article>
-          <article class="day" data-city="cerdena"><div class="day-head">Miércoles 07/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🏝️</div><div class="activity">🌴 Playa / Relax</div><div class="activity">📍 Día en Cerdeña</div></div></article>
-          <article class="day" data-city="cerdena"><div class="day-head">Jueves 08/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🌊</div><div class="activity">🌴 Playa / Relax</div><div class="activity">📍 Último día en Cerdeña</div></div></article>
+          <article class="day" data-city="cerdena"><div class="day-head">Domingo 04/10</div><div class="day-body"><div class="place">NÁPOLES → CAGLIARI</div><div class="visual">✈️</div><div class="activity confirmed">✈️ Ryanair FR2197 · <strong class="clock">07:35 → 08:50</strong></div><div class="activity confirmed">🛫 Operado por Malta Air</div><div class="activity"><span class="pending">Falta comprarlo</span></div></div></article>
+          <article class="day" data-city="cerdena"><div class="day-head">Lunes 05/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🌊</div><div class="activity">🌴 Playa / Relax</div><div class="activity">📍 Día en Cerdeña</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div></div></article>
+          <article class="day" data-city="cerdena"><div class="day-head">Martes 06/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🏝️</div><div class="activity">🌴 Playa / Relax</div><div class="activity">📍 Día en Cerdeña</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div></div></article>
+          <article class="day" data-city="cerdena"><div class="day-head">Miércoles 07/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🏝️</div><div class="activity">🌴 Playa / Relax</div><div class="activity">📍 Día en Cerdeña</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div></div></article>
+          <article class="day" data-city="cerdena"><div class="day-head">Jueves 08/10</div><div class="day-body"><div class="place">CERDEÑA</div><div class="visual">🌊</div><div class="activity">🌴 Playa / Relax</div><div class="activity">📍 Último día en Cerdeña</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div></div></article>
           <article class="day" data-city="madrid"><div class="day-head">Viernes 09/10</div><div class="day-body"><div class="place">CERDEÑA → MADRID</div><div class="visual">🛫</div><div class="activity">🌴 Mañana de playa</div><div class="activity transport">✈️ 16:00 → 18:15</div><div class="activity"><span class="pending">Falta comprarlo</span></div></div></article>
           <article class="day" data-city="madrid"><div class="day-head">Sábado 10/10</div><div class="day-body"><div class="place">MADRID</div><div class="visual">🏙️</div><div class="activity">📷 Llegada y paseo</div><div class="activity">🌙 Noche en Madrid</div></div></article>
         </div>
@@ -413,8 +438,8 @@
         <div class="week">
           <div class="week-label"><div><span>Semana 5</span>Madrid<br />y regreso</div></div>
           <article class="day" data-city="madrid"><div class="day-head">Domingo 11/10</div><div class="day-body"><div class="place">MADRID</div><div class="visual">🏙️</div><div class="activity">📷 Día completo</div><div class="activity">por la ciudad</div></div></article>
-          <article class="day" data-city="madrid"><div class="day-head">Lunes 12/10</div><div class="day-body"><div class="place">MADRID → MÉXICO</div><div class="visual">☕</div><div class="activity confirmed">✈️ AM0022 · Sale 23:35</div></div></article>
-          <article class="day" data-city="argentina"><div class="day-head">Martes 13/10</div><div class="day-body"><div class="place">MÉXICO → EZEIZA</div><div class="visual">🇦🇷</div><div class="activity confirmed">🛬 AM0022 · Llega 03:45</div><div class="activity confirmed">✈️ AM0030 · Sale 09:10 · Llega 21:25</div></div></article>
+          <article class="day" data-city="madrid"><div class="day-head">Lunes 12/10</div><div class="day-body"><div class="place">MADRID → MÉXICO</div><div class="visual">☕</div><div class="meetings"><div>📞 Nubank Daily · <strong class="clock">16:00</strong></div><div>📞 LaserAway Daily · <strong class="clock">17:00</strong></div><div>👥 Nubank Equipo · <strong class="clock">19:45</strong></div></div><div class="activity confirmed">✈️ AM0022 · Sale <strong class="clock">23:35</strong></div></div></article>
+          <article class="day" data-city="argentina"><div class="day-head">Martes 13/10</div><div class="day-body"><div class="place">MÉXICO → EZEIZA</div><div class="visual">🇦🇷</div><div class="activity confirmed">🛬 AM0022 · Llega <strong class="clock">03:45</strong></div><div class="activity confirmed">✈️ AM0030 · Sale <strong class="clock">09:10</strong> · Llega <strong class="clock">21:25</strong></div></div></article>
           <div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div>
         </div>
       </section>
